@@ -142,6 +142,11 @@ vim.opt.splitbelow = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
+-- Tabs config
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
@@ -404,7 +409,38 @@ require('lazy').setup({
     end,
   },
   {
-    'ThePrimeagen/vim-be-good',
+    'ThePrimeagen/vim-be-good', -- Great game to learn Vim
+  },
+  {
+    'sindrets/diffview.nvim', -- Single tabpage interface for modified GIT files
+  },
+  {
+    'tomasky/bookmarks.nvim',
+    -- after = "telescope.nvim",
+    event = 'VimEnter',
+    config = function()
+      require('bookmarks').setup {
+        -- sign_priority = 8,  --set bookmark sign priority to cover other sign
+        save_file = vim.fn.expand '$HOME/.bookmarks', -- bookmarks save file path
+        keywords = {
+          ['@t'] = '☑️ ', -- mark annotation startswith @t ,signs this icon as `Todo`
+          ['@w'] = '⚠️ ', -- mark annotation startswith @w ,signs this icon as `Warn`
+          ['@f'] = '⛏ ', -- mark annotation startswith @f ,signs this icon as `Fix`
+          ['@n'] = ' ', -- mark annotation startswith @n ,signs this icon as `Note`
+        },
+        on_attach = function(bufnr)
+          local bm = require 'bookmarks'
+          local map = vim.keymap.set
+          map('n', 'mm', bm.bookmark_toggle) -- add or remove bookmark at current line
+          map('n', 'mi', bm.bookmark_ann) -- add or edit mark annotation at current line
+          map('n', 'mc', bm.bookmark_clean) -- clean all marks in local buffer
+          map('n', 'mn', bm.bookmark_next) -- jump to next mark in local buffer
+          map('n', 'mp', bm.bookmark_prev) -- jump to previous mark in local buffer
+          map('n', 'ml', bm.bookmark_list) -- show marked file list in quickfix window
+          map('n', 'mx', bm.bookmark_clear_all) -- removes all bookmarks
+        end,
+      }
+    end,
   },
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -720,12 +756,13 @@ require('lazy').setup({
           --
           -- <c-l> will move you to the right of each of the expansion locations.
           -- <c-h> is similar, except moving you backwards.
-          ['<C-l>'] = cmp.mapping(function()
+          -- INFO switching l to rigth and h to left
+          ['<C-right>'] = cmp.mapping(function()
             if luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
             end
           end, { 'i', 's' }),
-          ['<C-h>'] = cmp.mapping(function()
+          ['<C-left>'] = cmp.mapping(function()
             if luasnip.locally_jumpable(-1) then
               luasnip.jump(-1)
             end
