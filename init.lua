@@ -442,6 +442,20 @@ require('lazy').setup({
       }
     end,
   },
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('oil').setup {
+        default_file_explorer = true,
+        view_options = {
+          show_hidden = true,
+        },
+      }
+    end,
+  },
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -578,7 +592,7 @@ require('lazy').setup({
         angularls = {},
         azure_pipelines_ls = {},
         clangd = {},
-        csharp_ls = {},
+        --csharp_ls = {},
         --css_variables = {},
         cssls = {},
         cssmodules_ls = {},
@@ -591,6 +605,7 @@ require('lazy').setup({
         --markdown_oxide = {},
         gopls = {},
         --phpactor = {},
+        omnisharp = {},
         powershell_es = {},
         pyright = {},
         rust_analyzer = {},
