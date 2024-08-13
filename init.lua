@@ -129,7 +129,7 @@ vim.opt.smartcase = true
 vim.opt.signcolumn = 'yes'
 
 -- Decrease update time
-vim.opt.updatetime = 250
+vim.opt.updatetime = 150
 vim.opt.timeoutlen = 300
 
 -- Configure how new splits should be opened
@@ -200,6 +200,37 @@ vim.keymap.set('n', '<C-left>', '<C-w><C-h>', { desc = 'Move focus to the left w
 vim.keymap.set('n', '<C-right>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-down>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-up>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- Cool keymaps
+-- Move highlighted block
+vim.keymap.set('v', 'E', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', 'I', ":m '<-2<CR>gv=gv")
+
+-- Keep cursor on the same place while applying J
+vim.keymap.set('n', 'J', 'mzJ`z')
+
+-- Keep cursor at the middle when searching
+vim.keymap.set('n', 'n', 'nzzzv')
+vim.keymap.set('n', 'N', 'Nzzzv')
+
+-- Paste over without losing paste buffer
+vim.keymap.set('x', '<leader>p', "'_dP")
+
+-- Yank into the clipboard
+vim.keymap.set('n', '<leader>y', "'+y")
+vim.keymap.set('v', '<leader>y', "'+y")
+vim.keymap.set('n', '<leader>Y', "'+Y")
+
+-- Quickfix list and Location list keybinds
+vim.keymap.set('n', '<C-i>', '<cmd>cnext<CR>zz')
+vim.keymap.set('n', '<C-e>', '<cmd>cnext<CR>zz')
+vim.keymap.set('n', '<leader>i', '<cmd>lnext<CR>zz')
+vim.keymap.set('n', '<leader>e', '<cmd>lprev<CR>zz')
+
+--
+
+-- Disable Ex Mode
+vim.keymap.set('n', 'Q', '<nop>')
 
 -- Oil nvim navigate to open file parent directory
 vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
