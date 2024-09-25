@@ -227,8 +227,6 @@ vim.keymap.set('n', '<C-e>', '<cmd>cnext<CR>zz')
 vim.keymap.set('n', '<leader>i', '<cmd>lnext<CR>zz')
 vim.keymap.set('n', '<leader>e', '<cmd>lprev<CR>zz')
 
---
-
 -- Disable Ex Mode
 vim.keymap.set('n', 'Q', '<nop>')
 
@@ -760,6 +758,7 @@ require('lazy').setup({
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         javascript = { { 'prettierd', 'prettier' } },
+        typescript = { { 'prettierd', 'prettier' } },
       },
     },
   },
@@ -897,6 +896,10 @@ require('lazy').setup({
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
+
+      require('mini.pairs').setup()
+
+      require('mini.ai').setup()
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
