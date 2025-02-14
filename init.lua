@@ -84,6 +84,19 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+-- Set values for Windows or MacOs/Linx
+-- Determine the home directory based on the operating system
+local home = os.getenv("HOME")
+if vim.fn.has("win32") == 1 then
+  home = os.getenv("USERPROFILE")
+end
+
+-- Define the configuration path
+local config_path = home .. "/.config/nvim"
+
+-- Example usage of the config_path
+vim.cmd("set runtimepath+=" .. config_path)
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -545,6 +558,11 @@ require('lazy').setup({
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
     },
+{
+  "pmizio/typescript-tools.nvim",
+  dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  opts = {},
+},
     config = function()
       -- Brief Aside: **What is LSP?**
       --
@@ -693,7 +711,7 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        tsserver = {},
+        -- tsserver = {},
         --
 
         lua_ls = {
