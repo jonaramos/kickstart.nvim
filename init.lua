@@ -91,6 +91,27 @@ if vim.fn.has("win32") == 1 then
   home = os.getenv("USERPROFILE")
 end
 
+-- Set RIPGREP_CONFIG_PATH to the .ripgreprc file in the current working directory
+vim.env.RIPGREP_CONFIG_PATH = vim.fn.getcwd() .."/.ripgreprc"
+
+-- Auto-detect project root and set RIPGREP_CONFIG_PATH
+vim.api.nvim_create_autocmd({"DirChanged"}, {
+  callback = function()
+    local ripgrep_config = vim.fn.getcwd() .."/.ripgreprc"
+    if vim.fn.filereadable(ripgrep_config) == 1 then
+      vim.env.RIPGREP_CONFIG_PATH = ripgrep_config
+    end
+  end
+})
+
+-- Also set it on startup
+vim.defer_fn(function()
+  local ripgrep_config = vim.fn.getcwd() .."/.ripgreprc"
+  if vim.fn.filereadable(ripgrep_config) == 1 then
+    vim.env.RIPGREP_CONFIG_PATH = ripgrep_config
+  end
+end, 100)
+
 -- Define the configuration path
 local config_path = home .. "/.config/nvim"
 
@@ -777,6 +798,7 @@ require('lazy').setup({
     'stevearc/conform.nvim',
     opts = {
       notify_on_error = false,
+      stop_after_first = true,
       format_on_save = {
         timeout_ms = 500,
         lsp_fallback = true,
@@ -788,8 +810,8 @@ require('lazy').setup({
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        javascript = { { 'prettierd', 'prettier' } },
-        typescript = { { 'prettierd', 'prettier' } },
+        javascript = { 'prettierd', 'prettier' },
+        typescript = { 'prettierd', 'prettier' },
       },
     },
   },
