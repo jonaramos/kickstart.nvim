@@ -557,16 +557,9 @@ require('lazy').setup({
   -- {
   --   'OrangeT/vim-csharp',
   -- },
-  -- {
-  --   'lukas-reineke/indent-blankline.nvim',
-  --   main = 'ibl',
-  --   ---@module "ibl"
-  --   ---@type ibl.config
-  --   opts = {},
-  --   config = function()
-  --     require('ibl').setup()
-  --   end,
-  -- },
+  {
+    'AndrewRadev/linediff.vim'
+  },
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
